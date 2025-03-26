@@ -9,7 +9,7 @@ const initialState: Service[] = [];
 
 // Create API instance with authorization header interceptor
 const api = axios.create({
-    baseURL: "http://localhost:3000/service",
+    baseURL: "https://salon-booking-backend-oxwm.onrender.com/service",
 });
 
 // Add request interceptor to include the token in all requests

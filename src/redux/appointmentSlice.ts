@@ -7,7 +7,7 @@ const initialState: Appointment[] = [];
 
 // Create API instance with baseURL
 const api = axios.create({
-    baseURL: "http://localhost:3000/appointment",
+    baseURL: "https://salon-booking-backend-oxwm.onrender.com/appointment",
 });
 
 // Add request interceptor to include the token in all requests
