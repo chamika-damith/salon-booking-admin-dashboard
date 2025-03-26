@@ -1,12 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Customer from "@/models/Customer.ts";
+import authService from "@/service/authService.ts";
 
 const initialState: Customer[] = [];
 
+// Create API instance with baseURL
 const api = axios.create({
     baseURL: "http://localhost:3000/customer",
 });
+
+// Add request interceptor to include the token in all requests
+api.interceptors.request.use(
+    (config) => {
+        const token = authService.getToken();
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 // Save Customer
 export const saveCustomer = createAsyncThunk(

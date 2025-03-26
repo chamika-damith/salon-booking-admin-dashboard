@@ -1,12 +1,30 @@
+// Updated service slice with proper token authentication
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Service from "@/models/Service.ts";
+import authService from "@/service/authService.ts";
 
 const initialState: Service[] = [];
 
+// Create API instance with authorization header interceptor
 const api = axios.create({
     baseURL: "http://localhost:3000/service",
 });
+
+// Add request interceptor to include the token in all requests
+api.interceptors.request.use(
+    (config) => {
+        const token = authService.getToken();
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 export const saveService = createAsyncThunk(
     "service/saveService",

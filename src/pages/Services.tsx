@@ -1,4 +1,3 @@
-
 import {useEffect, useState} from "react";
 import { Plus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,7 +37,6 @@ export default function Services() {
     };
 
     if (editingService) {
-      // setServices(services.map(s => s.id === editingService.id ? serviceData : s));
       await dispatch(updateService(serviceData))
           .unwrap()
           .then(() => {

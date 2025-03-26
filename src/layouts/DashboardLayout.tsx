@@ -1,5 +1,3 @@
-"use client"
-
 import { useNavigate, useLocation, Outlet } from "react-router-dom"
 import {
   Sidebar,
@@ -54,7 +52,7 @@ export default function DashboardLayout() {
             <SidebarHeader className="border-b border-slate-200 p-4 dark:border-slate-700">
               <div className="flex items-center gap-3">
                 <Avatar className="h-10 w-10 border border-slate-200 dark:border-slate-700">
-                  <AvatarImage src="/placeholder.svg?height=40&width=40" alt="Salon Admin" />
+                  <AvatarImage src="https://media.licdn.com/dms/image/v2/D5603AQFK-toJWo5W6Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1695037566372?e=1746057600&v=beta&t=9scgjR_gB4BnAymcWH_Z6shy0puSHwq89UqEHQYVsAU" alt="Salon Admin" />
                   <AvatarFallback className="bg-primary text-primary-foreground">SA</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
