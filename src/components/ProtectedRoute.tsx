@@ -9,6 +9,8 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ allowedRoles = [] }: ProtectedRouteProps) => {
     const { isAuthenticated, currentUser } = useContext(AuthContext);
 
+    console.log(currentUser)
+
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }

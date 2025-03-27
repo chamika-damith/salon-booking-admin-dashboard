@@ -1,9 +1,9 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import {Toaster} from "@/components/ui/toaster";
+import {Toaster as Sonner} from "@/components/ui/sonner";
+import {TooltipProvider} from "@/components/ui/tooltip";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import {SidebarProvider} from "@/components/ui/sidebar";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Services from "./pages/Services";
@@ -20,42 +20,49 @@ const queryClient = new QueryClient();
 
 const App = () => (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AuthProvider>
-            <Routes>
-              {/* Public routes */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/unauthorized" element={<Unauthorized />} />
+        <TooltipProvider>
+            <Toaster/>
+            <Sonner/>
+            <BrowserRouter>
+                <AuthProvider>
+                    <Routes>
+                        {/* Public routes */}
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/unauthorized" element={<Unauthorized/>}/>
 
-              {/* Protected routes */}
-              <Route element={<ProtectedRoute />}>
-                <Route path="/" element={
-                  <SidebarProvider>
-                    <DashboardLayout />
-                  </SidebarProvider>
-                }>
-                  <Route index element={<Navigate to="/dashboard" replace />} />
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="services" element={<Services />} />
-                  <Route path="customers" element={<Customers />} />
-                  <Route path="appointments" element={<Appointments />} />
-                </Route>
-              </Route>
+                        {/* Protected routes */}
+                        <Route element={<ProtectedRoute/>}>
+                            <Route path="/" element={
+                                <SidebarProvider>
+                                    <DashboardLayout/>
+                                </SidebarProvider>
+                            }>
+                                <Route index element={<Navigate to="/dashboard" replace/>}/>
+                                <Route path="dashboard" element={<Dashboard/>}/>
 
-              {/*/!* Admin-only routes *!/*/}
-              {/*<Route element={<ProtectedRoute allowedRoles={["admin"]} />}>*/}
-              {/*</Route>*/}
+                                <Route path="customers" element={<Customers/>}/>
+                                <Route path="appointments" element={<Appointments/>}/>
+                            </Route>
+                        </Route>
 
-              {/* Not Found Route */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AuthProvider>
-        </BrowserRouter>
-      </TooltipProvider>
+                        {/* Admin-only routes */}
+                        <Route element={<ProtectedRoute allowedRoles={["admin"]}/>}>
+                            <Route path="/" element={
+                                <SidebarProvider>
+                                    <DashboardLayout/>
+                                </SidebarProvider>
+                            }>
+                                <Route path="services" element={<Services/>}/>
+                            </Route>
+                        </Route>
+
+                        {/* Not Found Route */}
+                        <Route path="*" element={<NotFound/>}/>
+                    </Routes>
+                </AuthProvider>
+            </BrowserRouter>
+        </TooltipProvider>
     </QueryClientProvider>
 );
 

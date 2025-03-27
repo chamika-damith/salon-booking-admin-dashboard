@@ -14,24 +14,23 @@ export default function Register() {
         name: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        role: "admin"
     });
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validate passwords match
         if (formData.password !== formData.confirmPassword) {
             toast.error("Passwords do not match!");
             return;
         }
 
-        // Validate password strength
         if (formData.password.length < 6) {
             toast.error("Password must be at least 6 characters long!");
             return;
@@ -40,9 +39,7 @@ export default function Register() {
         setIsLoading(true);
 
         try {
-            // Remove confirmPassword from the data sent to the API
             const { confirmPassword, ...registrationData } = formData;
-
             await authService.register(registrationData);
             toast.success("Registration successful!");
             navigate("/dashboard");
@@ -64,62 +61,29 @@ export default function Register() {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-2">
                             <Label htmlFor="name">Full Name</Label>
-                            <Input
-                                id="name"
-                                name="name"
-                                type="text"
-                                aria-label="Full name"
-                                placeholder="Enter your full name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Input id="name" name="name" type="text" placeholder="Enter your full name" value={formData.name} onChange={handleChange} required />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
-                            <Input
-                                id="email"
-                                name="email"
-                                type="email"
-                                aria-label="Email address"
-                                placeholder="Enter your email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Input id="email" name="email" type="email" placeholder="Enter your email" value={formData.email} onChange={handleChange} required />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
-                            <Input
-                                id="password"
-                                name="password"
-                                type="password"
-                                aria-label="Password"
-                                placeholder="Create a password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Input id="password" name="password" type="password" placeholder="Create a password" value={formData.password} onChange={handleChange} required />
                             <p className="text-xs text-gray-500">Password must be at least 6 characters long</p>
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="confirmPassword">Confirm Password</Label>
-                            <Input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type="password"
-                                aria-label="Confirm password"
-                                placeholder="Confirm your password"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm your password" value={formData.confirmPassword} onChange={handleChange} required />
                         </div>
-                        <Button
-                            type="submit"
-                            className="w-full bg-rose-500 hover:bg-rose-600 transition duration-300"
-                            disabled={isLoading}
-                        >
+                        <div className="space-y-2">
+                            <Label htmlFor="role">Select Role</Label>
+                            <select id="role" name="role" value={formData.role} onChange={handleChange} className="w-full p-2 border rounded-lg">
+                                <option value="admin">Admin</option>
+                                <option value="staff">Staff</option>
+                            </select>
+                        </div>
+                        <Button type="submit" className="w-full bg-rose-500 hover:bg-rose-600 transition duration-300" disabled={isLoading}>
                             {isLoading ? "Creating Account..." : "Create Account"}
                         </Button>
                     </form>
